@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,6 +36,7 @@ public class Persona implements Serializable{
     private String estudio;
 
     @ManyToMany( mappedBy = "personas")
+    @JsonIgnore
     private List<Empresa> empresas;
     
     public Persona() {

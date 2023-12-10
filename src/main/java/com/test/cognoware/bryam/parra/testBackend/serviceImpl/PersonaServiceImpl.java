@@ -1,6 +1,7 @@
 package com.test.cognoware.bryam.parra.testBackend.serviceImpl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,35 @@ public class PersonaServiceImpl implements PersonaService{
             return persona;
         } catch (Exception e) {
             return e.getMessage();
+        }
+    }
+
+    @Override
+    public List<Persona> readPersona() {
+        try {
+            return personaRepository.findAll();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Object updatePersona(Persona persona) {
+        try {
+            personaRepository.save(persona);
+            return persona;
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
+    @Override
+    public boolean deletePersona(Long id) {
+        try {
+            personaRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 

@@ -20,9 +20,10 @@ public class ResponseWS {
         this.error = error;
     }
 
-    public ResponseWS(Integer statusCode, String message) {
+    public ResponseWS(Integer statusCode, String message, Object body) {
         this.statusCode = statusCode;
         this.message = message;
+        this.body = body;
     }
 
     public Integer getStatusCode() {
