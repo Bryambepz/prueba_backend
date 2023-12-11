@@ -1,11 +1,14 @@
 package com.test.cognoware.bryam.parra.testBackend.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.test.cognoware.bryam.parra.testBackend.DTO.EmpresaPersonaDTO;
 import com.test.cognoware.bryam.parra.testBackend.model.Empresa;
+import com.test.cognoware.bryam.parra.testBackend.model.Persona;
 import com.test.cognoware.bryam.parra.testBackend.repository.EmpresaRepository;
 import com.test.cognoware.bryam.parra.testBackend.service.EmpresaService;
 
@@ -52,6 +55,30 @@ public class EmpresaServiceImpl implements EmpresaService{
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    @Override
+    public List<EmpresaPersonaDTO> getEmpresaPersonas() {
+        try {
+            List<Object[]> empresasPersonasDTO = empresaRepository.getEmpresasPersonas();
+            List<EmpresaPersonaDTO> personasEmpresasDTOs = new ArrayList<>();
+            for (Object[] objects : empresasPersonasDTO) {
+                EmpresaPersonaDTO newEmpPer = new EmpresaPersonaDTO();
+                // newEmpPer.setEmpresa( (Empresa) objects[0]);
+                // newEmpPer.setPersona( (Persona) objects[1]);
+                newEmpPer.setEmpresaId(  Long.parseLong(objects[0].toString()) );
+                newEmpPer.setEmpresaNombre( objects[1].toString().toString() );
+                newEmpPer.setEmpresaDireccion( objects[2].toString());
+                newEmpPer.setPersonaId( Long.parseLong(objects[3].toString()));
+                newEmpPer.setPersonaNombre(objects[4].toString());
+                newEmpPer.setPersonaEstudio(objects[5].toString());
+                personasEmpresasDTOs.add(newEmpPer);
+            }
+            return personasEmpresasDTOs;
+        } catch (Exception e) {
+            System.out.println("error de get EP => "+e.getMessage());
+            return null;
         }
     }
     

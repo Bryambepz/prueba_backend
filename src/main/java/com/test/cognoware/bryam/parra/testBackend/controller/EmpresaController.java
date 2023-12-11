@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.test.cognoware.bryam.parra.testBackend.DTO.EmpresaPersonaDTO;
 import com.test.cognoware.bryam.parra.testBackend.model.Empresa;
 import com.test.cognoware.bryam.parra.testBackend.response.ResponseWS;
 import com.test.cognoware.bryam.parra.testBackend.service.EmpresaService;
@@ -77,6 +78,18 @@ public class EmpresaController {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.responseWS);
         } else {
             this.responseWS = new ResponseWS(HttpStatus.INTERNAL_SERVER_ERROR.value(), "No se pudo eliminar, Intente nuevamente mas tarde", "");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(this.responseWS);
+        }
+    }
+
+    @GetMapping( path = "empresas-personas", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseWS> getEmpresasYPersonas(){
+        List<EmpresaPersonaDTO> empresaPersonaDTOs = this.empresaService.getEmpresaPersonas();
+        if ( !empresaPersonaDTOs.isEmpty() ) {
+            this.responseWS = new ResponseWS(HttpStatus.OK.value(), "Se obtuvo satisfactoriamente", "", empresaPersonaDTOs);
+            return ResponseEntity.status(HttpStatus.OK).body(this.responseWS);
+        } else {
+            this.responseWS = new ResponseWS(HttpStatus.INTERNAL_SERVER_ERROR.value(), "No se pudo obtener, intente mas tarde", "No informacion de empresas y personas");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(this.responseWS);
         }
     }
